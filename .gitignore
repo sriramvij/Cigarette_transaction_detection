@@ -1,0 +1,15 @@
+datasets/
+frames/
+images/
+__pycache__/
+notebooks/
+saved_models/
+something/
+test_vids/
+vids/
+*.json
+model_best.pth
+output*
+*.npz
+*.ipynb
+*.html
