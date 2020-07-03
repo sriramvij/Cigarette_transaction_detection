@@ -14,3 +14,7 @@ output*
 *.ipynb
 *.html
 fri/
+images_july/
+*.avi
+*.zip
+*.mp4
