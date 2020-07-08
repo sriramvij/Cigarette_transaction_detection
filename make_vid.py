@@ -13,14 +13,19 @@ fig = plt.figure()
 
 ims = []
 
-for im in os.listdir("./images_july"):
-    ims.append("./images_july/"+im)
-ims.sort(key = lambda date: datetime.strptime(":".join(date.split("/")[-1].split('.')[0].split("_")[-4:-1]), '%H:%M:%S'))
+for im in os.listdir("./04_13"):
+    ims.append("./04_13/"+im)
+ims.sort(key = lambda date: datetime.strptime(date.split("/")[-1].split('.')[0].split("_")[-1], '%H:%M:%S:%f'))
 
-ims = [[plt.imshow(cv2.imread(i)[:, :, [2, 1, 0]], animated=True)] for i in ims if not isinstance(cv2.imread(i), type(None))]
+# print(len(ims))
 
-ani = animation.ArtistAnimation(fig, ims, interval=1000, blit=True,
+# for i in ims:
+#     print(i)
+
+ims = [[plt.imshow(cv2.imread(i)[:, :, [2, 1, 0]], animated=True)] for i in ims[:] if not isinstance(cv2.imread(i), type(None))]
+
+ani = animation.ArtistAnimation(fig, ims, interval=50, blit=True,
                                 repeat_delay=1000)
-ani.save('july_video.mp4')
+ani.save('04_13.mp4')
 plt.show()
     
