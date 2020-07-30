@@ -3,8 +3,8 @@ import cv2
 from tqdm import tqdm
 
 
-input_vid = './clove.mp4'
-output_vid = input_vid.split('.')[-2] +"_bgr."+input_vid.split('.')[-1]
+input_vid = './vids/trans_2.mp4'
+output_vid = "./bgr.mp4" 
 
 
 cap = cv2.VideoCapture(input_vid)
@@ -26,12 +26,12 @@ height = cap.get(cv2.CAP_PROP_FRAME_HEIGHT)  # float
 
 prev_frame = np.zeros((sz[1], sz[0], 3))
 
-fgbg = cv2.createBackgroundSubtractorMOG2()
+fgbg = cv2.createBackgroundSubtractorMOG2(history=50, varThreshold=100, detectShadows=True)
 
 print("input:", input_vid)
 print("output:", output_vid)
-while True:
-# for i in tqdm(range(frame_count)):
+# while True:
+for i in tqdm(range(frame_count)):
     
     ret, frame = cap.read()
 
@@ -41,8 +41,8 @@ while True:
 
     new_frame = frame*np.stack([mask, mask, mask], axis=-1)
 
-    # vout.write(new_frame)
-    cv2.imshow("window", frame)
+    vout.write(new_frame)
+    # cv2.imshow("window", frame)
     cv2.waitKey()
 
 

@@ -15,6 +15,7 @@ output*
 *.html
 fri/
 images_july/
+images_temp/
 *.avi
 *.zip
 *.mp4

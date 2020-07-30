@@ -10,22 +10,28 @@ from datetime import datetime
 import matplotlib.animation as animation
 
 fig = plt.figure()
-
+nframes = 5000
+imdir = "./images_temp/"
+vid_fname = "./vids/trans_2_cam_2.mp4"
 ims = []
 
-for im in os.listdir("./04_13"):
-    ims.append("./04_13/"+im)
+for im in os.listdir(imdir):
+    ims.append(imdir+im)
 ims.sort(key = lambda date: datetime.strptime(date.split("/")[-1].split('.')[0].split("_")[-1], '%H:%M:%S:%f'))
 
-# print(len(ims))
+sz = (400, 225)
 
-# for i in ims:
-#     print(i)
+fps = 14                    
+fourcc = cv2.VideoWriter_fourcc(*'MP4V')
+                                                   
+vout = cv2.VideoWriter()                           
+vout.open(vid_fname,fourcc,fps,sz,1)              
 
-ims = [[plt.imshow(cv2.imread(i)[:, :, [2, 1, 0]], animated=True)] for i in ims[:] if not isinstance(cv2.imread(i), type(None))]
+print(vid_fname)
+   
+for i in tqdm(ims[10000:]):
+    frame = cv2.imread(i)
+    if frame.shape[0] == 225:
+        vout.write(frame)
 
-ani = animation.ArtistAnimation(fig, ims, interval=50, blit=True,
-                                repeat_delay=1000)
-ani.save('04_13.mp4')
-plt.show()
-    
+vout.release()
