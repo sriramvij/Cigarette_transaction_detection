@@ -10,16 +10,17 @@ from datetime import datetime
 import matplotlib.animation as animation
 
 fig = plt.figure()
-nframes = 5000
-imdir = "./images_temp/"
-vid_fname = "./vids/trans_2_cam_2.mp4"
+nframes = 8000
+imdir = "./s3_july30/"
+vid_fname = "./vids/s3_july30.mp4"
 ims = []
 
 for im in os.listdir(imdir):
     ims.append(imdir+im)
-ims.sort(key = lambda date: datetime.strptime(date.split("/")[-1].split('.')[0].split("_")[-1], '%H:%M:%S:%f'))
+    print(":".join(im.split('.')[0].split("_")[-4:]), '%H:%M:%S:%f')
+ims.sort(key = lambda date: datetime.strptime(":".join(date.split("/")[-1].split('.')[0].split("_")[-4:]), '%H:%M:%S:%f'))
 
-sz = (400, 225)
+sz = (400, 300)
 
 fps = 14                    
 fourcc = cv2.VideoWriter_fourcc(*'MP4V')
@@ -29,9 +30,12 @@ vout.open(vid_fname,fourcc,fps,sz,1)
 
 print(vid_fname)
    
-for i in tqdm(ims[10000:]):
+for i in tqdm(ims[:nframes]):
     frame = cv2.imread(i)
-    if frame.shape[0] == 225:
+    print(frame.shape)
+    if  frame.shape[0] == 300:
         vout.write(frame)
+    else:
+        pass
 
 vout.release()
