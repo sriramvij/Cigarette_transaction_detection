@@ -28,4 +28,11 @@ images_temp/
 04_12*
 04_13*
 mdp_ims
-store1_august4
+store*/
+ims/
+new_ims/
+s3_27thjuly/
+.*/
+*.yaml
+*.csv
+contributors

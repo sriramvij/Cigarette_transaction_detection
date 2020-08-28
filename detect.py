@@ -4,8 +4,10 @@ import os
 from tqdm import tqdm
 from shelf_detection import detect_transaction
 
-input_vid = "./vids/s3_july30.mp4"
+input_vid = "./vids/store3_aug6.mp4"
+im_names = input_vid.split("/")[-1].split(".")[0]
 output_vid = "./detected.mp4"
+mdp_path = "./store3/"
 
 cap = cv2.VideoCapture(input_vid)
 
@@ -39,6 +41,7 @@ detector = detect_transaction(history=50, varThreshold=200, detectShadows=True, 
 
 
 print(input_vid)
+print(im_names)
 print(output_vid)
 saved_frames = []
 prev_frame = None
@@ -63,11 +66,10 @@ for i in tqdm(range(frame_count)):
 
 cap.release()
 
-mdp_path = "./mdp_ims/"
 try:
     os.mkdir(mdp_path)
 except:
     pass
 for n,i in tqdm(enumerate(saved_frames)):
-    cv2.imwrite(mdp_path+str(n)+".jpg", i)
+    cv2.imwrite(mdp_path+im_names+"_"+str(n)+".jpg", i)
 
